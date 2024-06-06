@@ -1,0 +1,40 @@
+# ---------------------------------------------------------------------------
+#
+#         Developed by VertrauterDavid
+#
+#         https://vertrauterdavid.net/
+#         https://github.com/VertrauterDavid/
+#
+# ---------------------------------------------------------------------------
+
+# Duration of the combat timer in seconds
+Duration: 15
+
+Messages:
+  Prefix: '&c&lCombat &8| &7' # Prefix for all messages
+  NowInCombat: '&cYou are now in combat!' # empty = disabled
+  NoLongerInCombat: '&cYou are no longer in combat!' # empty = disabled
+  LogoutInCombat: '&c%player% has logged out while he was in combat!' # empty = disabled
+
+# Disable Combat for all with OP permissions
+ignore-op: true
+
+# Disable Elytra in combat
+disable-elytra: true
+
+# Settings for the action bar message during combat
+ActionBar:
+  Enabled: true # Enables the action bar message
+  Format: '&7Combat &8➜ &c%seconds%'
+
+Commands:
+  Blocked: # List of commands that are blocked during combat
+    - spawn
+    - tpa
+    - home
+  Format: '&7You cannot use &c%command% &7while in combat!'
+
+EnderPeal:
+  Enabled: true # Enables restrictions on ender pearl usage during combat
+  Distance: 25 # Maximum allowed teleport distance with ender pearls
+  Format: 'You cannot teleport that far away in combat!'

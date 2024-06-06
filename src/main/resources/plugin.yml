@@ -1,0 +1,9 @@
+name: Combat
+version: 1.0
+api-version: 1.20
+main: net.vertrauterdavid.combat.Combat
+author: VertrauterDavid
+website: https://vertrauterdavid.net/ & https://github.com/vertrauterdavid/
+
+softdepend:
+  - WorldGuard
