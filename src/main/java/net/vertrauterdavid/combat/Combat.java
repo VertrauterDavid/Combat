@@ -3,6 +3,8 @@ package net.vertrauterdavid.combat;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.vertrauterdavid.combat.listener.*;
+import net.vertrauterdavid.combat.util.plugin.StatisticUtil;
+import net.vertrauterdavid.combat.util.plugin.VersionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -27,6 +29,9 @@ public class Combat extends JavaPlugin {
         saveDefaultConfig();
 
         instance = this;
+        new StatisticUtil(this);
+        new VersionUtil(this);
+
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
             worldGuardUtil = new WorldGuardUtil();
         }
