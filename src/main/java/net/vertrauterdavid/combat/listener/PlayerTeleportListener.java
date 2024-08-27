@@ -23,7 +23,7 @@ public class PlayerTeleportListener implements Listener {
                 to.setY(0);
                 if (from.distance(to) > Combat.getInstance().getConfig().getLong("EnderPeal.Distance", 0)) {
                     event.setCancelled(true);
-                    player.sendMessage(Combat.getInstance().getMessage(player, "Messages.Prefix") + Combat.getInstance().getMessage(player, "EnderPeal.Format"));
+                    player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("EnderPeal.Format"));
                 }
             }
         }

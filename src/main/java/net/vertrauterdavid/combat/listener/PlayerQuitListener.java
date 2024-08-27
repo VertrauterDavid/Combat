@@ -17,7 +17,7 @@ public class PlayerQuitListener implements Listener {
             player.setHealth(0);
 
             if (!(Combat.getInstance().getConfig().getString("Messages.LogoutInCombat", "").equalsIgnoreCase(""))) {
-                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Combat.getInstance().getMessage(player, "Messages.Prefix") + Combat.getInstance().getMessage(player, "Messages.LogoutInCombat").replaceAll("%player%", player.getName())));
+                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Messages.LogoutInCombat").replaceAll("%player%", player.getName())));
             }
         }
 

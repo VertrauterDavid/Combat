@@ -20,7 +20,7 @@ public class PlayerCommandPreprocessListener implements Listener {
             List<?> list = Combat.getInstance().getConfig().getList("Commands.Blocked", new ArrayList<>());
             if (list.contains(command.toLowerCase()) || list.contains(command.split(" ")[0].toUpperCase())) {
                 event.setCancelled(true);
-                player.sendMessage(Combat.getInstance().getMessage(player, "Messages.Prefix") + Combat.getInstance().getMessage(player, "Commands.Format").replaceAll("%command%", command));
+                player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Commands.Format").replaceAll("%command%", command));
             }
         }
     }

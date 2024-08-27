@@ -38,21 +38,19 @@ public class Combat extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), instance);
         Bukkit.getPluginManager().registerEvents(new PlayerTeleportListener(), instance);
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                if (isInCombat(player)) {
-                    long seconds = (combatPlayers.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;
-                    player.sendActionBar(getMessage(player, "ActionBar.Format").replaceAll("%seconds%", String.valueOf(seconds + 1)));
-                }
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> Bukkit.getOnlinePlayers().forEach(player -> {
+            if (isInCombat(player)) {
+                long seconds = (combatPlayers.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;
+                player.sendActionBar(getMessage("ActionBar.Format").replaceAll("%seconds%", String.valueOf(seconds + 1)));
+            }
 
-                if (!isInCombat(player) && combatPlayers.containsKey(player.getUniqueId())) {
-                    if (!(Combat.getInstance().getConfig().getString("Messages.NoLongerInCombat", "").equalsIgnoreCase(""))) {
-                        player.sendMessage(Combat.getInstance().getMessage(player, "Messages.Prefix") + Combat.getInstance().getMessage(player, "Messages.NoLongerInCombat"));
-                    }
-                    combatPlayers.remove(player.getUniqueId());
+            if (!isInCombat(player) && combatPlayers.containsKey(player.getUniqueId())) {
+                if (!(Combat.getInstance().getConfig().getString("Messages.NoLongerInCombat", "").equalsIgnoreCase(""))) {
+                    player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Messages.NoLongerInCombat"));
                 }
-            });
-        }, 20, 20);
+                combatPlayers.remove(player.getUniqueId());
+            }
+        }), 20, 20);
     }
 
     public boolean isInCombat(Player player) {
@@ -66,7 +64,7 @@ public class Combat extends JavaPlugin {
         }
 
         if (!isInCombat(player) && !(Combat.getInstance().getConfig().getString("Messages.NowInCombat", "").equalsIgnoreCase(""))) {
-            player.sendMessage(Combat.getInstance().getMessage(player, "Messages.Prefix") + Combat.getInstance().getMessage(player, "Messages.NowInCombat"));
+            player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Messages.NowInCombat"));
         }
 
         combatPlayers.put(player.getUniqueId(), System.currentTimeMillis() + 1000 * getConfig().getLong("Duration", 0));
@@ -75,7 +73,7 @@ public class Combat extends JavaPlugin {
         player.setAllowFlight(false);
     }
 
-    public String getMessage(Player player, String key) {
+    public String getMessage(String key) {
         return translateColorCodes(getConfig().getString(key, ""));
     }
 
