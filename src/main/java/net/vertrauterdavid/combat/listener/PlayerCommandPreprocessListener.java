@@ -17,8 +17,10 @@ public class PlayerCommandPreprocessListener implements Listener {
         String command = event.getMessage().substring(1);
 
         if (Combat.getInstance().isInCombat(player)) {
-            List<?> list = Combat.getInstance().getConfig().getList("Commands.Blocked", new ArrayList<>());
-            if (list.contains(command.toLowerCase()) || list.contains(command.split(" ")[0].toUpperCase())) {
+            List<String> list = (List<String>) Combat.getInstance().getConfig().getList("Commands.Blocked", new ArrayList<>());
+            list.replaceAll(String::toLowerCase);
+
+            if (list.contains(command.toLowerCase()) || list.contains(command.split(" ")[0].toLowerCase())) {
                 event.setCancelled(true);
                 player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Commands.Format").replaceAll("%command%", command));
             }
