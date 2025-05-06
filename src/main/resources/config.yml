@@ -12,12 +12,12 @@ Duration: 15
 
 Messages:
   Prefix: '&c&lCombat &8| &7' # Prefix for all messages
-  NowInCombat: '&cYou are now in combat!' # empty = disabled
-  NoLongerInCombat: '&cYou are no longer in combat!' # empty = disabled
-  LogoutInCombat: '&c%player% has logged out while he was in combat!' # empty = disabled
+  NowInCombat: '%prefix%&cYou are now in combat!' # empty = disabled
+  NoLongerInCombat: '%prefix%&cYou are no longer in combat!' # empty = disabled
+  LogoutInCombat: '%prefix%&c%player% has logged out while he was in combat!' # empty = disabled
 
 # Disable Combat for all with OP permissions
-ignore-op: true
+ignore-op: false
 
 # Disable Elytra in combat
 disable-elytra: true
@@ -32,9 +32,9 @@ Commands:
     - spawn
     - tpa
     - home
-  Format: '&7You cannot use &c%command% &7while in combat!'
+  Format: '%prefix%You cannot use &c%command% &7while you are in combat!'
 
 EnderPeal:
-  Enabled: true # Enables restrictions on ender pearl usage during combat
+  Enabled: false # Enables restrictions on ender pearl usage during combat
   Distance: 25 # Maximum allowed teleport distance with ender pearls
-  Format: 'You cannot teleport that far away in combat!'
+  Format: '%prefix%You cannot teleport that far away in combat!'

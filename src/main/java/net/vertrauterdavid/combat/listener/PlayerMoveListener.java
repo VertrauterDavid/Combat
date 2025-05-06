@@ -13,7 +13,7 @@ public class PlayerMoveListener implements Listener {
     public void handle(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        if (!(Combat.getInstance().getConfig().getBoolean("EnderPeal.Enabled"))) return;
+        if (!(Combat.getInstance().getConfig().getBoolean("disable-elytra"))) return;
 
         if ((Combat.getInstance().getConfig().getBoolean("ignore-op", true) && player.isOp()) || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
             return;

@@ -1,6 +1,7 @@
 package net.vertrauterdavid.combat.listener;
 
 import net.vertrauterdavid.combat.Combat;
+import net.vertrauterdavid.combat.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +18,7 @@ public class PlayerQuitListener implements Listener {
             player.setHealth(0);
 
             if (!(Combat.getInstance().getConfig().getString("Messages.LogoutInCombat", "").equalsIgnoreCase(""))) {
-                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Messages.LogoutInCombat").replaceAll("%player%", player.getName())));
+                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(MessageUtil.get("Messages.LogoutInCombat").replaceAll("%player%", player.getName())));
             }
         }
 

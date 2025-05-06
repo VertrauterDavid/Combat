@@ -1,8 +1,8 @@
 package net.vertrauterdavid.combat;
 
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
 import net.vertrauterdavid.combat.listener.*;
+import net.vertrauterdavid.combat.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -10,8 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Getter
 public class Combat extends JavaPlugin {
@@ -38,15 +36,15 @@ public class Combat extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), instance);
         Bukkit.getPluginManager().registerEvents(new PlayerTeleportListener(), instance);
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> Bukkit.getOnlinePlayers().forEach(player -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> Bukkit.getOnlinePlayers().forEach(player -> {
             if (isInCombat(player)) {
                 long seconds = (combatPlayers.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;
-                player.sendActionBar(getMessage("ActionBar.Format").replaceAll("%seconds%", String.valueOf(seconds + 1)));
+                player.sendActionBar(MessageUtil.get("ActionBar.Format").replaceAll("%seconds%", String.valueOf(seconds + 1)));
             }
 
             if (!isInCombat(player) && combatPlayers.containsKey(player.getUniqueId())) {
                 if (!(Combat.getInstance().getConfig().getString("Messages.NoLongerInCombat", "").equalsIgnoreCase(""))) {
-                    player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Messages.NoLongerInCombat"));
+                    player.sendMessage(MessageUtil.get("Messages.NoLongerInCombat"));
                 }
                 combatPlayers.remove(player.getUniqueId());
             }
@@ -64,28 +62,13 @@ public class Combat extends JavaPlugin {
         }
 
         if (!isInCombat(player) && !(Combat.getInstance().getConfig().getString("Messages.NowInCombat", "").equalsIgnoreCase(""))) {
-            player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Messages.NowInCombat"));
+            player.sendMessage(MessageUtil.get("Messages.NowInCombat"));
         }
 
-        combatPlayers.put(player.getUniqueId(), System.currentTimeMillis() + 1000 * getConfig().getLong("Duration", 0));
+        combatPlayers.put(player.getUniqueId(), System.currentTimeMillis() + 1000 * getConfig().getLong("Duration", 0L));
         player.setGliding(false);
         player.setFlying(false);
         player.setAllowFlight(false);
-    }
-
-    public String getMessage(String key) {
-        return translateColorCodes(getConfig().getString(key, ""));
-    }
-
-    public String translateColorCodes(String message) {
-        Pattern pattern = Pattern.compile("&#([A-Fa-f0-9]{6})");
-        Matcher matcher = pattern.matcher(message);
-        StringBuilder buffer = new StringBuilder();
-        while (matcher.find()) {
-            matcher.appendReplacement(buffer, ChatColor.of("#" + matcher.group(1)).toString());
-        }
-        matcher.appendTail(buffer);
-        return ChatColor.translateAlternateColorCodes('&', buffer.toString());
     }
 
 }

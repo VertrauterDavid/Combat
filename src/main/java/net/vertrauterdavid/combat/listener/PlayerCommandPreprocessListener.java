@@ -1,6 +1,7 @@
 package net.vertrauterdavid.combat.listener;
 
 import net.vertrauterdavid.combat.Combat;
+import net.vertrauterdavid.combat.util.MessageUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +23,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 
             if (list.contains(command.toLowerCase()) || list.contains(command.split(" ")[0].toLowerCase())) {
                 event.setCancelled(true);
-                player.sendMessage(Combat.getInstance().getMessage("Messages.Prefix") + Combat.getInstance().getMessage("Commands.Format").replaceAll("%command%", command));
+                player.sendMessage(MessageUtil.get("Commands.Format").replaceAll("%command%", command));
             }
         }
     }
